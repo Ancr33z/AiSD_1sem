@@ -39,7 +39,7 @@ int main() {
     printf("\nfibonachi number = %llu\n", *(fibonaci + n - 1));
     printf("The time: %d minutes, %.3f seconds for loop\n", minutes, seconds);
     delete[] fibonaci;
-
+    
     clock_t funcStart = clock();
 
     long long int fibonaciCounter = fibonachiFunc(n - 1);
