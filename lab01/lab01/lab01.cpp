@@ -10,18 +10,16 @@ int main() {
 
     int n;
 
-    printf("Enter number N <=47 :");
+    printf("Enter number N :");
     cin >> n;
-
     if (n < 0)
         return printf("You entered wrong number");
-
-    if (n == 1)
+    if (n == 0)
         return printf("fibonachi number = 0");
-    else if (n == 2)
+    if (n == 1)
         return printf("fibonachi number = 1");
 
-    clock_t start = clock();
+    clock_t start = clock();        
 
     unsigned long long int* fibonaci = new unsigned long long int[n + 2];
     *fibonaci = 0;
@@ -37,7 +35,7 @@ int main() {
     int minutes = static_cast<int>(seconds) / 60;
 
     printf("\nfibonachi number = %llu\n", *(fibonaci + n - 1));
-    printf("The time: %d minutes, %.3f seconds for loop\n", minutes, seconds);
+    printf("The time: %d minutes, %f seconds for loop\n", minutes, seconds);
     delete[] fibonaci;
     
     clock_t funcStart = clock();
@@ -49,7 +47,7 @@ int main() {
     int funcMinutes = static_cast<int>(funcSeconds) / 60;
 
     printf("\nfibonachi number = %lld\n", fibonaciCounter);
-    printf("The time: %d minutes, %.3f seconds for function\n", funcMinutes, funcSeconds);
+    printf("The time: %d minutes, %f seconds for function\n", funcMinutes, funcSeconds);
 
     return 0;
 }
@@ -59,6 +57,6 @@ long long int fibonachiFunc(int n) {
         return n;
     }
     else {
-        return fibonachiFunc(n - 1) + fibonachiFunc(n - 2);
+        return unsigned (fibonachiFunc(n - 1) + fibonachiFunc(n - 2));
     }
 }
