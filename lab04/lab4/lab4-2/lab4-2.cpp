@@ -12,12 +12,12 @@ int main()
 
 	do
 	{
-		cout << "Введите количество товаров: ";
+		cout << "Введите количество элементов массива: ";
 		cin >> N;
 
 		if (N > 10000 || N < 0)
 			cout << "Некорректный ввод";
-	} while (N > 10000 || N < 0);
+	} while (N > 10000 || N < 3);
 
 	int size = N;//Размер массива или количество участников
 
@@ -47,7 +47,7 @@ int main()
 	unsigned int top1 = participantScores[size-1], top2 = participantScores[size-1], top3 = participantScores[size-1]; //Места победителей
 	bool top2Check = true,top3Check = true; // Булевые переменные чтобы заполнить топ
 
-	for (i = size-1; i > 0; i--)
+	for (i = size-1; i >= 0; i--)
 	{
 		if (top2 > participantScores[i] && top2Check && top2 >=top1)
 		{
@@ -65,7 +65,7 @@ int main()
 
 	//------------------------------------------- Цикл посчёта количества победителей 
 
-	for (i = size-1; i > 0; i--)
+	for (i = size-1; i >= 0; i--)
 		if (participantScores[i] == top1 || participantScores[i] == top2 || participantScores[i] == top3)
 			awardess++;
 
