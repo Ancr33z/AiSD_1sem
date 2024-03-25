@@ -1,42 +1,54 @@
 ﻿#include <iostream>
-
-
+#include "Stack.h"
+#include <string>
 using namespace std;
-
-
-int main()
-{
-    setlocale(LC_ALL, "RUS");
-
-    int i, j = 0;
-    int* correctString = new int[3] {0,0,0};
-    char inputString[255];
-
-
-    cout << "Введите строку" << endl;
-    cin >> inputString;
-
-    for (i = 0; i < strlen(inputString); i++)
-    {
-        if (inputString[i] == '[')
-            correctString[0]++;
-        else if (inputString[i] == ']')
-            correctString[0]++;
-        else if (inputString[i] == '(')
-            correctString[1]++;
-        else if (inputString[i] == ')')
-            correctString[1]++;
-        else if (inputString[i] == '{')
-            correctString[2]++;
-        else if (inputString[i] == '}')
-            correctString[2]++;
-
+bool prov(const string& s, int& count) {
+    Stack* stack;
+    stack = NULL;
+    for (char c : s) {
+        switch (c) {
+        case '(':
+            push(')', stack);
+            count++;
+            break;
+        case '[':
+            push(']', stack);
+            count++;
+            break;
+        case '{':
+            push('}', stack);
+            count++;
+            break;
+        case ')':
+        case ']':
+        case '}':
+            if (isEmpty(stack) || top(stack) != c) {
+                return false;
+            }
+            pop(stack);
+            break;
+        default:
+            break;
+        }
     }
-
-    if (correctString[0] % 2 == 0 && correctString[1] % 2 == 0 && correctString[2] % 2 == 0)
-        cout << "\nСкобки расставлены верно\n";
+    return isEmpty(stack);
+}
+void test(const string& s, int& count) {
+    if (prov(s, count) && count > 0)
+        cout << "Скобки расставлены верно" << endl << endl;
+    if (count == 0)
+        cout << "Скобки отсутствуют" << endl << endl;
     else
-        cout << "\nСкобки расставлены не верно\n";
-
-    return 0;
+        if (!prov(s, count) && count > 0)
+            cout << "Скобки расставлены неверно" << endl << endl;
+}
+void main() {
+    setlocale(LC_ALL, "rus");
+    while (true) {
+        int count = 0;
+        cout << "Введите строку с клавиатуры: ";
+        string str;
+        getline(cin, str);
+        test(str, count);
+    }
 }
