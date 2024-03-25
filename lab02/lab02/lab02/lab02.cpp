@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     setlocale(LC_ALL, "RUS");
 
-    int choose, counter = 0;
+    int choose, counter = 1;
     long int low = 1, high, x;
 
     cout << "Введите число n: ";
@@ -37,8 +37,8 @@ int main() {
         case 1: {
             high = x - 1;
             x = (low + high) / 2;
-            stepCounter[counter] = x;
             counter++;
+            stepCounter[counter] = x;
             if (high == low)
             {
                 cout << "Максимальное количество шагов =  " << counter << endl;
@@ -64,8 +64,8 @@ int main() {
             }
             low = x + 1;
             x = (low + high) / 2;
-            stepCounter[counter] = x;
             counter++;
+            stepCounter[counter] = x;
             if (high == low){
                 cout << "Максимальное количество шагов =  " << counter << endl;
                 for (int i = 0; i < counter; i++)
