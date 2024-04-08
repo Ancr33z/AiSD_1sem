@@ -23,6 +23,8 @@ bool prov(const string& s, int& count) {
         case ']':
         case '}':
             if (isEmpty(stack) || top(stack) != c) {
+                if (c == ')' || c == '}' || c == ']')
+                    count++;
                 return false;
             }
             pop(stack);
