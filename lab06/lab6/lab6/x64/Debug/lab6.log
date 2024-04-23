@@ -1,4 +1,4 @@
-﻿Сборка начата 26.02.2024 16:16:35.
+﻿Сборка начата 22.04.2024 20:28:46.
 Уровень детализации журнала: Normal.     1>Проект "D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.vcxproj" в узле 2 (целевые объекты Build).
      1>InitializeBuildStatus:
          Создание "x64\Debug\lab6.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
@@ -6,8 +6,14 @@
        ClCompile:
          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\HostX64\x64\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /permissive- /Fo"x64\Debug\\" /Fd"x64\Debug\vc143.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt lab6.cpp
          lab6.cpp
+     1>D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(7,1): warning C4005: INT_MAX: изменение макроопределения
+       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\limits.h(36,1): message : см. предыдущее определение "INT_MAX"
+     1>D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(107,13): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+     1>D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(131,10): warning C4804: <: небезопасное использование типа "bool" в операции
        Link:
          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\HostX64\x64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\x64\Debug\lab6.exe" /INCREMENTAL /ILK:"x64\Debug\lab6.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\x64\Debug\lab6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\x64\Debug\lab6.lib" /MACHINE:X64 x64\Debug\lab6.obj
+         x64\Debug\Hash_table.obj
+         x64\Debug\list.obj
          lab6.vcxproj -> D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\x64\Debug\lab6.exe
        FinalizeBuildStatus:
          Файл "x64\Debug\lab6.tlog\unsuccessfulbuild" удаляется.
@@ -15,7 +21,14 @@
      1>Сборка проекта "D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.vcxproj" завершена (целевые объекты Build).
 
 Сборка успешно завершена.
-    Предупреждений: 0
+
+       "D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.vcxproj" (целевой объект Build ) (1) ->
+       (Целевой объект ClCompile) -> 
+         D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(7,1): warning C4005: INT_MAX: изменение макроопределения
+         D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(107,13): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+         D:\education\raboti\Labi\AiSD_1sem\lab06\lab6\lab6\lab6.cpp(131,10): warning C4804: <: небезопасное использование типа "bool" в операции
+
+    Предупреждений: 3
     Ошибок: 0
 
-Прошло времени 00:00:00.60
+Прошло времени 00:00:00.73

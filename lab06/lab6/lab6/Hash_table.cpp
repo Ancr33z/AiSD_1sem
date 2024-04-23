@@ -5,12 +5,12 @@
 struct AAA
 {
 	int key;
-	const char* mas;
+	const char* name;
 	const char* adr;
 	AAA(int k, char* z, char* l)
 	{
 		key = k;
-		mas = z;
+		name = z;
 		adr = l;
 	}
 };

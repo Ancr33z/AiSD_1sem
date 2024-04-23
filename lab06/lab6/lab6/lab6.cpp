@@ -1,138 +1,159 @@
-﻿#include "Hash_Twin_Chain.h"
+﻿#include <string>
 #include <iostream>
-#include <windows.h>
-#include <tchar.h>
-#include <time.h>
+#include <chrono>
 
 using namespace std;
 
-const char* NML[15] = { "Яглинская", "Пивоваров", "Лупинка", "Петрович", "Полторан",
-						"Михедов", "Дубина", "Кашков", "Щипер", "Зданевич",
-						"Никитенко", "Жигадло", "Курило", "Нестерова", "Дайтбегова" };
+#define INT_MAX 32767
 
-const char* ADR[15] = { "Пушкина 32", "Строителей 3", "Ленина 52", "Революционная 161", "Октябрьская 11",
-						"Фрунзе 21", "Пушкина 55", "Студенческая 50", "Кирова 10", "Хоружей 55",
-						"Советская 1", "Интернациональная 67", "Пролетарская 11", "Мира 8", "Юности 5"
-
+int NUM;
+struct arr {
+	string str = "\0";
+	int num = 0;
+	arr* next = NULL;
 };
-
-struct AAA
-{
-	int key;
-	const char* mas;
-	const char* adr;
-	AAA(int k, const char* z, const char* l)
-	{
-		key = k;
-		mas = z;
-		adr = l;
-	}
-	AAA()
-	{
-		key = 0;
-		mas = NULL;
-		adr = NULL;
-	}
-};
-//-------------------------------
-int hf(void* d)                                                                         //Функция создания указателя как информационного элемента списка
-{
-	AAA* f = (AAA*)d;
-	return f->key;
+int hash_f(string str, int* rand8) {
+	int sum = 0;
+	for (int i = 0; i < str.length(); i++) sum += str[i];
+	return sum % NUM;
 }
-//-------------------------------
-void AAA_print(listx::Element* e)
-{
-	std::cout << ((AAA*)e->data)->key << '\t' << ((AAA*)e->data)->mas << "\t" << ((AAA*)e->data)->adr << " / ";
-}
-//-------------------------------
-int _tmain(int argc, _TCHAR* argv[])
-{
-	setlocale(LC_ALL, "rus");                                                            //Установление кодировки
-	SetConsoleOutputCP(1251);
-	SetConsoleCP(1251);
-	srand(time(0));
-	clock_t start, end;	// для времени
-	double searching_time;
-	int current_size = 0;
-	//Переменная, определяющая размер таблицы                                                    
-	cout << "Введите размер хеш-таблицы: ";                             //Сообщение о вводе размера таблицы
-	cin >> current_size;                                                                 //Ввод пользователем размера таблицы
-	hashTC::Object H = hashTC::create(current_size, hf);
-	int choice;
-	int k;
-	for (;;)																			//Меню
-	{
-		cout << "1 - вывод хеш-таблицы" << endl;
-		cout << "2 - добавление элемента" << endl;
-		cout << "3 - удаление элемента" << endl;
-		cout << "4 - поиск элемента" << endl;
-		cout << "5 - заполнение хэш-таблицы" << endl;
-		cout << "0 - выход" << endl;
-		cout << "сделайте выбор" << endl;
-		cin >> choice;
-		switch (choice)
-		{
-		case 0:  exit(0);
-		case 1: H.Scan();
-			break;
-		case 2: {	  AAA* a = new AAA;                                            //Создание нового элемента списка. Список - элемент таблицы
-			char* str = new char[100];                                              //Создание новой строки как данных, хранящихся в поле элемента списка
-			char* str2 = new char[100];
-			cout << "Введите год(начало c 0): ";
-			cin >> k;
-			k = k;//Ввод ключа, хранящегося в поле элемента списка
-			a->key = k;                                                            //Присваивание полю "ключ" списка вводимый ключ
-			cout << "Введите фамилию: ";
-			cin.ignore();
-			cin.getline(str, 100);
-			a->mas = str;                                                          //Присваивание полю "строка" списка вводимую строку
-			cout << "Введите адрес: ";
-			cin.ignore();
-			cin.getline(str2, 100);
-			a->adr = str2;
-			H.insert(a);                                                           //Вставка элемента в объкт-таблицу
-		}
-			  break;
-		case 3: {	  AAA* b = new AAA;
-			cout << "Введите год: ";
-			cin >> k;
-			b->key = k;
-			H.deleteByData(b);
-		}
-			  break;
-		case 4: {AAA* c = new AAA;
-			cout << "Введите год: ";
-			cin >> k;
-			c->key = k;
-			start = clock();
-			if (H.search(c) == NULL)
-				cout << "Элемент не найден" << endl;
+void output(arr* tab, int size) {
+	setlocale(LC_ALL, "RUS");
+	for (int i = 0; i < size; i++) { // пока не выведем весь массив
+		arr* ptr = &tab[i];
+		do {
+			if (ptr->str[0] == '\0') {
+				cout << "Empty\n";
+				break;
+			}
 			else
-			{
-				cout << "Первый элемент с данным годом: ";
-				AAA_print(H.search(c));
-				cout << endl;
-			}
-			end = clock();
-			searching_time = (double)(end - start) / CLOCKS_PER_SEC;
-			cout << "время поиска: " << searching_time << endl;
+				cout << "name: " << ptr->str << "\tnumber: " << ptr->num << endl;
+		} while (ptr = ptr->next);
+	}
+}
+void dlt(arr* tab, int size, int num, int* rand8) {
+	int k = hash_f(to_string(num), rand8); // вычисляем ключ элемента
+	while (k > size - 1) k -= size; // уменьшаем ключ
+	arr* ptr = &tab[k];
+	if (ptr->num == num) { // если элемент найден
+		if (ptr->next) {
+			ptr->num = ptr->next->num; // записываем ключ
+			ptr->str = ptr->next->str; //имя
+			ptr->next = ptr->next->next; // меняем указатель на следующий элемент от удалённого
 		}
-			  break;
-		case 5:
-		{
-			for (int i = 0; i < H.sizeO; i++)
-			{
-				AAA* a = new AAA;
-				k = 0 + rand() % H.sizeO;
-				a->key = k;
-				a->mas = NML[0 + rand() % 13];
-				a->adr = ADR[0 + rand() % 13];
-				H.insert(a);
-			}
+		else {
+			ptr->num = 0;
+			ptr->str = '\0';
 		}
-		break;
+		return;
+	}
+	if (ptr->num) { // если список не пуст
+		arr* ptr_prev = new arr;
+		if (ptr->num == num) {
+			ptr_prev->next = ptr->next;
+			delete ptr;
+			return;
 		}
 	}
-	return 0;
+	cout << "Элемента нет\n";
+	return;
 }
+void input(arr* tab, int size, string str, int num, int* rand8) {
+	int k = hash_f(to_string(num), rand8); // ищем ключ для элемента в хеш-функции
+	while (k > size - 1)
+		k -= size; // уменьшаем ключ, чтобы влез в размерность
+	arr* ptr = &tab[k];
+	if (size == 1 && ptr->num) {
+		cout << "Таблица уже заполнена\n";
+		return;
+	}
+	if (!ptr->num) { // если элемент пуст
+		ptr->next = NULL; // следующий элемент NULL
+		ptr->str = str; // записываем имя
+		ptr->num = num; // записываем ключ
+	}
+	else {
+		arr* current = ptr;
+		while (current->next) {
+			current = current->next; // переходим к концу списка
+		}
+		arr* p = new arr;
+		p->next = NULL; // для следующего элемента p установили NULL
+		p->str = str; // имя
+		p->num = num; // ключ
+		current->next = p; // для current установили следующим элементом p
+	}
+}
+
+void search(arr* tab, int size, int num, int* rand8) {
+	int k = hash_f(to_string(num), rand8);
+	while (k > size - 1)
+		k -= size; // уменьшение ключа до размера массива
+	arr* ptr = &tab[k];
+	if (ptr->num) {
+		while (ptr->next && ptr->num != num) {
+			ptr = ptr->next;
+		}
+		if (ptr->num == num) {
+			cout << "Ключ: " << ptr->num << "\tИмя: " << ptr->str << endl;
+			return;
+		}
+		cout << "error\n";
+		exit(1);
+	}
+	cout << "Элемента нет\n";
+	return;
+}
+void main() {
+	setlocale(LC_ALL, "ru");
+	int size;
+	cout << "Введите размер таблицы: "; cin >> size;
+	NUM = size;
+	int clearMas[256] = { 0 };
+	arr* mas = new arr[size];
+	int choise;
+	do {
+		cout << "1 - Вывод хеш-таблицы\n2 - Добавление элемента\n3 - Поиск элемента\n4 - Удаление\n0 - Выход\n";
+		cin >> choise;
+		switch (choise) {
+		case 1: {
+			output(mas, size);
+			break;
+		}
+		case 2: {
+			string str;
+			int num;
+			cout << "Введите имя: ";
+			cin.ignore();
+			getline(cin, str);
+			cout << "Введите номер телефона: ";
+			cin >> num;
+			if (0 < num < INT_MAX)
+				input(mas, size, str, num, clearMas);
+			else
+				cout << "Некорректный номер\n";
+			break;
+		}
+		case 3: {
+			cout << "Введите ключ: ";
+			int num;
+			cin >> num;
+			cin.ignore();
+			auto start = chrono::high_resolution_clock::now();
+			search(mas, size, num, clearMas);
+			auto end = chrono::high_resolution_clock::now();
+			chrono::duration<float>duration = end - start;
+			cout << "Расчетное время: " << duration.count() << " секунд" << endl;
+			break;
+		}
+		case 4: {
+			cout << "Введите ключ: ";
+			int num;
+			cin >> num;
+			dlt(mas, size, num, clearMas);
+		}
+		default:
+			break;
+		}
+	} while (choise);
+} 
