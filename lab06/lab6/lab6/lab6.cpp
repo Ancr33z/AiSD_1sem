@@ -5,8 +5,8 @@
 using namespace std;
 
 #define INT_MAX 32767
-
 int NUM;
+
 struct arr {
 	string str = "\0";
 	int num = 0;
@@ -50,6 +50,17 @@ void dlt(arr* tab, int size, int num, int* rand8) {
 	if (ptr->num) { // если список не пуст
 		arr* ptr_prev = new arr;
 		if (ptr->num == num) {
+			ptr_prev->next = ptr->next;
+			delete ptr;
+			return;
+		}
+		bool find = false;
+		while (ptr->next && ptr->next->num != num) {
+			ptr_prev = ptr;
+			ptr = ptr->next; 
+		}
+
+		if (ptr->num = num) {
 			ptr_prev->next = ptr->next;
 			delete ptr;
 			return;
